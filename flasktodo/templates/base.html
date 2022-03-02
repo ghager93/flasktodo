@@ -1,12 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Flasktodo</title>
-</head>
-<body>
-    <p>From the base</p>
+{% extends 'bootstrap/base.html' %}
 
-    {% block content %}{% endblock %}
-</body>
-</html>
+{% block title %}
+    {% if title %}{{ title }} - Flasktodo{% else %}What to do?{% endif %}
+{% endblock %}
+
+{% block navbar %}
+    <nav class="navbar navbar-dark bg-primary">
+        <p>Hello</p>
+        <svg class="bi bi-arrow-left-circle" fill="currentColor" height="16" viewBox="0 0 16 16"
+             width="16" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16
+        0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0
+        0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"
+              fill-rule="evenodd"/>
+</svg>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-info" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        {# application content needs to be provided in the app_content block #}
+        {% block app_content %}{% endblock %}
+    </div>
+{% endblock %}
