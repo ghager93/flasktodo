@@ -2,6 +2,8 @@ import os
 
 from flask import Flask
 from flask_bootstrap import Bootstrap
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 from . import config
 from . import home
@@ -9,6 +11,9 @@ from . import home
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     bootstrap = Bootstrap(app)
+    db = SQLAlchemy(app)
+    migrate = Migrate(app, db)
+
     app.config.from_object(config.Config)
 
     if test_config is None:
