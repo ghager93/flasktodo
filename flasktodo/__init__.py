@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask
+from flask import Flask, g
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -10,11 +10,14 @@ from . import home
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
-    bootstrap = Bootstrap(app)
-    db = SQLAlchemy(app)
-    migrate = Migrate(app, db)
-
     app.config.from_object(config.Config)
+
+    bootstrap = Bootstrap(app)
+
+    with app.app_context():
+        g.db = SQLAlchemy(app)
+        migrate = Migrate(app, g.db)
+
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -28,6 +31,8 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
+
+
 
     app.register_blueprint(home.bp)
 
