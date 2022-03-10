@@ -2,13 +2,13 @@ from flask import (
     Blueprint, request, url_for, render_template, flash, redirect
 )
 
-from . import forms
+from flasktodo import forms, db, models
 
 bp = Blueprint('home', __name__)
 
 @bp.route('/')
 def home():
-    return render_template('home.html', message='hello world!')
+    return render_template('home.html', message='hello world!', users=models.User.query.all())
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
