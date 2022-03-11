@@ -19,7 +19,6 @@ def create_app(test_config=None):
     #     g.db = SQLAlchemy(app)
     #     migrate = Migrate(app, g.db)
 
-
     if test_config is None:
         # load the instance config, if it exists, when not testing
         app.config.from_pyfile('config.py', silent=True)
@@ -33,9 +32,9 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    from flasktodo import home
+    from flasktodo import views
 
-    app.register_blueprint(home.bp)
+    app.register_blueprint(views.bp)
 
     return app
 
