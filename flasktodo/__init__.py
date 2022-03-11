@@ -43,3 +43,8 @@ app = create_app()
 bootstrap = Bootstrap(app)
 db.init_app(app)
 migrate = Migrate(app, db)
+
+
+@app.shell_context_processor
+def make_shell_context():
+    return {'db': db, 'User': models.User, 'Post': models.Post}

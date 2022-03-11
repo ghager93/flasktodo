@@ -9,7 +9,11 @@ bp = Blueprint('home', __name__)
 
 @bp.route('/')
 def home():
-    return render_template('home.html', message='hello world!', users=models.User.query.all())
+    return render_template('home.html',
+                           message='hello world!',
+                           users=models.User.query.all(),
+                           passwords=db.session.query(models.User.password_hash).all()
+                           )
 
 
 @bp.route('/login', methods=['GET', 'POST'])
@@ -26,8 +30,14 @@ def login():
 def register():
     form = forms.RegisterForm()
     if form.validate_on_submit():
-        flash('Registration requested for user {}'.format(form.username.data))
-        return redirect(url_for('home.home'))
+        # flash('Registration requested for user {}'.format(form.username.data))
+        if models.User.query.filter_by(username=form.username.data).first():
+            flash('User already exists')
+            redirect(url_for('home.register'))
+        else:
+            db.session.add(models.User(username=form.username.data, password_hash=form.password.data))
+            db.session.commit()
+            return redirect(url_for('home.home'))
 
     return render_template('register.html', form=form)
 
