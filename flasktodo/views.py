@@ -1,6 +1,7 @@
 from flask import (
     Blueprint, request, url_for, render_template, flash, redirect
 )
+from werkzeug.security import generate_password_hash, check_password_hash
 
 from flasktodo import forms, db, models
 
@@ -20,10 +21,22 @@ def home():
 def login():
     form = forms.LoginForm()
     if form.validate_on_submit():
-        flash('Login requested for user {}, remember_me={}'.format(
-            form.username.data, form.remember_me.data))
-        return redirect(url_for('home.home'))
+        if check_login(form.username.data, form.password.data):
+            flash('Login requested for user {}, remember_me={}'.format(
+                form.username.data, form.remember_me.data))
+            return redirect(url_for('home.home'))
+        else:
+            flash('Incorrect login')
     return render_template('login.html', form=form)
+
+
+def get_user(username):
+    return models.User.query.filter_by(username=username).first()
+
+
+def check_login(username, password):
+    user = get_user(username)
+    return user and check_password_hash(user.password_hash, password)
 
 
 @bp.route('/register', methods=['GET', 'POST'])
@@ -35,7 +48,8 @@ def register():
             flash('User already exists')
             redirect(url_for('home.register'))
         else:
-            db.session.add(models.User(username=form.username.data, password_hash=form.password.data))
+            db.session.add(models.User(username=form.username.data,
+                                       password_hash=generate_password_hash(form.password.data)))
             db.session.commit()
             return redirect(url_for('home.home'))
 
