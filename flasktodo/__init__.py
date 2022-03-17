@@ -9,6 +9,7 @@ from flasktodo import config
 from flasktodo import models
 from flasktodo.models import db
 
+
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_object(config.Config)
@@ -32,9 +33,11 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    from flasktodo import views
+    from flasktodo.views.auth import bp as auth_bp
+    from flasktodo.views.posts import bp as posts_bp
 
-    app.register_blueprint(views.bp)
+    app.register_blueprint(auth_bp, url_prefix='/auth')
+    app.register_blueprint(posts_bp, url_prefix='/posts')
 
     return app
 
