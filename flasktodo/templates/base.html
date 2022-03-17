@@ -6,9 +6,10 @@
 
 {% block navbar %}
     <nav class="navbar navbar-dark bg-primary">
-        <p>Hello</p>
+        <h1>FlaskToDo</h1>
         <a class="btn btn-primary" href="{{ url_for('home.login') }}">Log In</a>
         <a class="btn btn-success" href="{{ url_for('home.register') }}">Register</a>
+        <a class="btn btn-primary" href="{{ url_for('home.logout') }}">Log Out</a>
     </nav>
 {% endblock %}
 
