@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    {% for task in tasks %}
+        <h1>{{ task.title }}</h1>
+        <p>{{ task.body }}</p>
+        <p>{{ task.timestamp }}</p>
+    {% endfor %}
+{% endblock %}

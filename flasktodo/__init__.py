@@ -34,10 +34,10 @@ def create_app(test_config=None):
         pass
 
     from flasktodo.views.auth import bp as auth_bp
-    from flasktodo.views.posts import bp as posts_bp
+    from flasktodo.views.tasks import bp as tasks_bp
 
     app.register_blueprint(auth_bp, url_prefix='/auth')
-    app.register_blueprint(posts_bp, url_prefix='/posts')
+    app.register_blueprint(tasks_bp, url_prefix='/tasks')
 
     return app
 

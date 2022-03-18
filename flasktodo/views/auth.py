@@ -42,7 +42,7 @@ def login():
                 form.username.data, form.remember_me.data))
             session.clear()
             session['user_id'] = get_user(form.username.data).id
-            return redirect(url_for('posts.index'))
+            return redirect(url_for('tasks.index'))
         else:
             flash('Incorrect login')
     return render_template('login.html', form=form)
