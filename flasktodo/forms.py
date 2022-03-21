@@ -24,3 +24,10 @@ class CreateTaskForm(FlaskForm):
     body = TextAreaField('Body', validators=[DataRequired()])
     submit = SubmitField('Add Task')
 
+
+class EditTaskForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    body = TextAreaField('Body', validators=[DataRequired()])
+    submit = SubmitField('Edit Task')
+
+
