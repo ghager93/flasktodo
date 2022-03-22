@@ -14,6 +14,8 @@
         <h1>FlaskToDo</h1>
 
         {% if g.user %}
+            <a class="btn btn-primary" href="{{ url_for('tasks.index') }}">Tasks</a>
+            <a class="btn btn-primary" href="{{ url_for('tasks.create') }}">New Task</a>
             <a class="btn btn-primary" href="{{ url_for('auth.logout') }}">Log Out</a>
         {% else %}
             <a class="btn btn-primary" href="{{ url_for('auth.login') }}">Log In</a>
