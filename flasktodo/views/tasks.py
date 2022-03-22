@@ -36,7 +36,7 @@ def create():
                                    is_done=False
                                    ))
         db.session.commit()
-        redirect(url_for('tasks.index'))
+        return redirect(url_for('tasks.index'))
 
     return render_template('create_task.html', form=form)
 
@@ -46,14 +46,14 @@ def create():
 def edit(id):
     task = get_task(id)
     form = forms.EditTaskForm()
-    form.title.data = task.title
-    form.body.data = task.body
+    if request.method == "GET":
+        form.title.data = task.title
+        form.body.data = task.body
     if form.validate_on_submit():
-        print('validate')
         task.title = form.title.data
         task.body = form.body.data
         db.session.commit()
-        redirect(url_for('tasks.index'))
+        return redirect(url_for('tasks.index'))
 
     return render_template('edit_task.html', form=form)
 
