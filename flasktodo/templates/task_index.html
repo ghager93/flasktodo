@@ -4,7 +4,7 @@
     {% for task_card in task_cards %}
         <h3>{{ task_card.title }}</h3>
         <p>{{ task_card.body }}</p>
-        <p>{{ task_card.timestamp }}</p>
+        <p>{{ task_card.timestamp | strftime }}</p>
         <a href="{{ url_for('tasks.edit', id=task_card.id) }}">Edit</a>
         <a href="{{ url_for('tasks.delete', id=task_card.id) }}">Delete</a>
     {% endfor %}

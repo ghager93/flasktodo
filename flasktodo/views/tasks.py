@@ -1,22 +1,15 @@
+import dateutil.parser
+
 from flask import (
     Blueprint, request, url_for, render_template, flash, redirect, g, session
 )
 from werkzeug.exceptions import abort
 
+
 from flasktodo import forms, db, models
 from flasktodo.views.auth import login_required
 
 bp = Blueprint('tasks', __name__)
-
-#
-# @bp.route('/')
-# @login_required
-# def index():
-#     return render_template('home.html',
-#                            message='hello world!',
-#                            users=models.User.query.all(),
-#                            passwords=db.session.query(models.User.password_hash).all()
-#                            )
 
 
 @bp.route('/')
@@ -36,6 +29,11 @@ class TaskCard:
         self.body = task.body
         self.timestamp = task.timestamp
         self.id = task.id
+
+
+@bp.app_template_filter('strftime')
+def _jinja2_filter_datetime(date):
+    return date.strftime("%d/%m/%Y, %H:%M")
 
 
 @bp.route('/create', methods=['GET', 'POST'])
