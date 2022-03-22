@@ -6,5 +6,6 @@
         <p>{{ task.body }}</p>
         <p>{{ task.timestamp }}</p>
         <a href="{{ url_for('tasks.edit', id=task.id) }}">Edit</a>
+        <a href="{{ url_for('tasks.delete', id=task.id) }}">Delete</a>
     {% endfor %}
 {% endblock %}

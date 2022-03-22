@@ -58,13 +58,17 @@ def edit(id):
     return render_template('edit_task.html', form=form)
 
 
+@bp.route('/delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+def delete(id):
+    models.Task.query.filter_by(id=id).delete()
+    db.session.commit()
+    return redirect(url_for('tasks.index'))
+
+
 def get_task(id):
     task = models.Task.query.filter_by(id=id).first()
     if task:
         return task
     else:
         abort(404, f"task id {id} not found")
-
-
-def delete_task(id):
-    models.Task.query(id=id).delete()
