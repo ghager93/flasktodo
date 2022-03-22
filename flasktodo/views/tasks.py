@@ -22,7 +22,20 @@ bp = Blueprint('tasks', __name__)
 @bp.route('/')
 @login_required
 def index():
-    return render_template('task_index.html', tasks=models.Task.query.all())
+    task_cards = [TaskCard(task) for task in models.Task.query.all()]
+    return render_template('task_index.html', task_cards=task_cards)
+
+
+class TaskCard:
+    def __init__(self, task):
+        self.username = models.User.query.filter_by(id=task.user_id).first().username
+        if self.username == g.user.username:
+            self.title = "You need to " + task.title
+        else:
+            self.title = self.username + " needs to " + task.title
+        self.body = task.body
+        self.timestamp = task.timestamp
+        self.id = task.id
 
 
 @bp.route('/create', methods=['GET', 'POST'])

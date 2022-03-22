@@ -16,5 +16,3 @@ N
 flasktodo/templates/login.html,1\2\1287aaa6c5095bf280e66582a4ef94a71300e115
 K
 flasktodo/views/__init__.py,1\8\187447782f026a2279bdbae86f22747f897782a2
-G
-flasktodo/views/auth.py,5\b\5b6d729de34c7451ffbe7d77fcbfc8d416d73754
